@@ -73,10 +73,17 @@ def caculate_surplus_data(sales_row):
     positive surplus is waste
     negative surplus indicates extra made when stock was sold out
     """
+    print("Calculating Surplus data....\n")
     stock = SHEET.worksheet("stock").get_all_values()
-    
     stock_row = stock[-1]
-    print(stock_row)
+
+    surplus_data = []
+    for stock, sales in zip(stock_row, sales_row):
+        surplus =int(stock) - sales
+        surplus_data.append(surplus)
+    return surplus_data   
+
+
 
 
 
@@ -91,7 +98,9 @@ def main():
     data = get_sales_data() 
     sales_data = [int(num) for num in data]
     update_sales_worksheet(sales_data)
-    caculate_surplus_data(sales_data)
+    new_surplus_data = caculate_surplus_data(sales_data)
+    print(new_surplus_data)
+
 
 
 print("WELCOME TO LOVE SANWHICHES")
